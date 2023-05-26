@@ -1,0 +1,304 @@
+version: 1
+name: Greenhouse
+author: Karl Ostmo
+description: |
+  Curate flower varieties
+creative: false
+seed: 0
+objectives:
+  - teaser: Flower curation
+    goal:
+      - Distribute every type of flower into
+        the planter boxes in the greenhouse.
+        There are just enough "planter box receptacles"
+        to accommodate each variety.
+      - Do not pick any mushrooms!
+      - "Hint: examine your recipes for a way to simplify bookkeeping..."
+    condition: |
+      run "scenarios/Challenges/Ranching/_greenhouse/solution-checker.sw";
+    prerequisite:
+      previewable: true
+      logic:
+        and:
+          - populate_garden
+          - not: pick_mushroom
+          - not: blank_garden_cell
+  - id: populate_garden
+    teaser: Wait patiently
+    goal:
+      - Wait patiently until the garden is populated. Then you
+        will be able to `grab` treads and go to work!
+    condition: |
+      as base {
+        ishere "treads";
+      }
+  - id: pick_mushroom
+    teaser: Forbidden mushrooms
+    goal:
+      - The mushrooms are not ready for harvesting yet.
+        You must leave them in the field!
+    condition: |
+      as base {
+        x1 <- has "truffle";
+        x2 <- has "portobello";
+        x3 <- has "chanterelle";
+        x4 <- has "shiitake";
+        return $ x1 || x2 || x3 || x4;
+      }
+    optional: true
+  - id: blank_garden_cell
+    teaser: Leave no trace
+    goal:
+      - Do not allow a garden cell to become blank.
+    condition: |
+      as base {
+        loc <- whereami;
+        let x = fst loc in
+        let y = snd loc in
+        if (x >= 0 && x < 40 && y <= 0 && y > -8) {
+          isempty;
+        } {
+          return false;
+        }
+      }
+    optional: true
+attrs:
+  - name: soil
+    fg: "#eab64f"
+    bg: "#27221c"
+  - name: planterbox
+    fg: "#964B00"
+    bg: "#5C4033"
+  - name: greenhouseTop
+    fg: "#ffffff"
+    bg: "#002000"
+  - name: greenhouse
+    fg: "#ffffff"
+  - name: decoy
+    fg: "#00ff00"
+    bg: "#000000"
+  - name: frontFace
+    fg: "#BBBBBB"
+  - name: frontFaceFloor
+    fg: "#888888"
+    bg: "#BBBBBB"
+robots:
+  - name: base
+    dir: [0, 1]
+    devices:
+      - ADT calculator
+      - antenna
+      - branch predictor
+      - comparator
+      - clock
+      - dictionary
+      - drill
+      - fast grabber
+      - harvester
+      - hearing aid
+      - lambda
+      - logger
+      - scanner
+      - strange loop
+      - welder
+      - workbench
+    inventory:
+      - [41, decoy]
+  - name: planter
+    system: true
+    dir: [0, 1]
+    display:
+      invisible: true
+    devices:
+      - logger
+    inventory:
+      - [1, bit (0)]
+    program: |
+      run "scenarios/Challenges/Ranching/_greenhouse/planter.sw"
+  - name: prepchecker
+    system: true
+    dir: [1, 0]
+    display:
+      invisible: true
+    devices:
+      - logger
+    inventory:
+      - [1, treads]
+    program: |
+      run "scenarios/Challenges/Ranching/_greenhouse/prepchecker.sw"
+  - name: solutionchecker
+    system: true
+    dir: [-1, 0]
+    display:
+      invisible: true
+    devices:
+      - logger
+solution: |
+   run "scenarios/Challenges/Ranching/_greenhouse/solution.sw"
+entities:
+  - name: decoy
+    display:
+      char: '*'
+      attr: decoy
+    description:
+      - An artificial flower to fill an empty garden slot.
+  - name: truffle
+    display:
+      char: m
+      attr: silver
+    description:
+      - A mushroom
+    properties: [known, portable]
+  - name: portobello
+    display:
+      char: m
+      attr: silver
+    description:
+      - A mushroom
+    properties: [known, portable]
+  - name: chanterelle
+    display:
+      char: m
+      attr: silver
+    description:
+      - A mushroom
+    properties: [known, portable]
+  - name: shiitake
+    display:
+      char: m
+      attr: silver
+    description:
+      - A mushroom
+    properties: [known, portable]
+  - name: planter box receptacle
+    display:
+      char: '_'
+      attr: 'soil'
+    description:
+      - Plant flowers here.
+    properties: [known, portable]
+  - name: planter box wall
+    display:
+      char: '|'
+      attr: 'planterBox'
+    description:
+      - Structure.
+    properties: [known]
+  - name: planter box edge
+    display:
+      char: '\'
+      attr: 'planterBox'
+    description:
+      - Structure.
+    properties: [known]
+  - name: planter box lip
+    display:
+      char: '_'
+      attr: 'planterBox'
+    description:
+      - Structure.
+    properties: [known]
+  - name: planter box column
+    display:
+      char: '|'
+      attr: 'planterBox'
+    description:
+      - Structure.
+    properties: [known]
+  - name: greenhouse vertical wall
+    display:
+      char: '|'
+      attr: 'greenhouse'
+    description:
+      - Structure.
+    properties: [known]
+  - name: greenhouse horizontal wall
+    display:
+      char: '_'
+      attr: 'greenhouse'
+    description:
+      - Structure.
+    properties: [known]
+  - name: greenhouse top ridge
+    display:
+      char: '_'
+      attr: 'greenhouseTop'
+    description:
+      - Structure.
+    properties: [known]   
+  - name: greenhouse front face
+    display:
+      char: '█'
+      attr: 'frontFace'
+    description:
+      - Structure.
+    properties: [known]
+  - name: greenhouse front face floor
+    display:
+      char: '_'
+      attr: 'frontFaceFloor'
+    description:
+      - Structure.
+    properties: [known]
+  - name: greenhouse left slope
+    display:
+      char: '/'
+      attr: 'greenhouse'
+    description:
+      - Structure.
+    properties: [known]
+  - name: greenhouse right slope
+    display:
+      char: '\'
+      attr: 'greenhouse'
+    description:
+      - Structure.
+    properties: [known]
+known: []
+world:
+  default: [grass]
+  upperleft: [-9, 2]
+  offset: false
+  palette:
+    ".": [grass]
+    "d": [dirt]
+    "i": [blank]
+    "j": [blank, greenhouse front face]
+    "f": [blank, greenhouse front face floor]
+    Ω: [grass, null, base]
+    p: [dirt, null, planter]
+    k: [grass, null, prepchecker]
+    "/": [blank, greenhouse left slope]
+    "\\": [blank, greenhouse right slope]
+    "|": [blank, greenhouse vertical wall]
+    "_": [blank, greenhouse horizontal wall]
+    "g": [blank, greenhouse top ridge]
+    e: [blank, planter box edge]
+    c: [blank, planter box column]
+    r: [blank, planter box receptacle]
+    R: [blank, planter box receptacle, solutionchecker]
+    q: [blank, planter box lip]
+  map: |
+    .....................................................
+    .........k...........................................
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........dddddddddddddddddddddddddddddddddddddddd....
+    .........pppppppppppppppppppppppppppppppppppppppp....
+    .....................................................
+    .....................................................
+    .............gggggggggggggggggggggggggggggggggg......
+    .........Ω../\iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\.....
+    .........../jj\iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii\....
+    ........../jjjj\iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii|...
+    .........|jjffjj|iiiiqqqqqqqqqqqqqqqqqqqqqiiiiiii|...
+    .........|j|ii|j|iiicerrrrrrrrrrrrrrrrrrrReiiiiii|...
+    .........|j|ii|j|iiiiiiiqqqqqqqqqqqqqqqqqqqqqiiii|...
+    .........|j|ii|j|iiiiiicerrrrrrrrrrrrrrrrrrrreiii|...
+    .........|f|/i|f|________________________________|...
+    .....................................................
+    

@@ -1,0 +1,80 @@
+def elif = \t. \then. \else. {if t then else} end
+def else = \t. t end
+
+def modulus = \a. \b.
+    a - (b * (a/b));
+    end;
+
+def abs = \a.
+    if (a < 0) {a * -1} {a};
+    end;
+
+def getMushroomByIndex = \i.
+    if (i == 1) {"truffle"}
+    $ elif (i == 2) {"portobello"}
+    $ elif (i == 3) {"chanterelle"}
+    $ else {"shiitake"}
+    end;
+
+{% include 'flower-lookup.sw.j2' %}
+
+def plantAllInRow = \varietyCount. \fixedPlacement1. \fixedPlacement2. \requiredItem1. \requiredItem2. \i.
+    if (i > 0) {
+        let pseudoIdx = i - 1 in
+        item <- (
+            if (pseudoIdx == fixedPlacement1) {return requiredItem1;}
+            $ elif (pseudoIdx == fixedPlacement2) {return requiredItem2;}
+            $ else {
+                r <- random varietyCount;
+                return $ getFlowerbyIndex r;
+            }
+        );
+
+        create item;
+        place item;
+        move;
+
+        plantAllInRow varietyCount fixedPlacement1 fixedPlacement2 requiredItem1 requiredItem2 $ i - 1;
+    } {};
+    end;
+
+def prepareEverything = \flowerVarietyCount.
+    pos <- whereami;
+    yPos <- abs $ snd pos;
+
+    let rowLength = 8 in
+
+    // Guarantee one specific flower occurrences per row
+    // Probabilistically place a mushroom in a row while
+    // avoiding the guaranteed flower.
+    fixedFlowerPlacementPos <- random rowLength;
+
+    // 50% chance of placing a mushroom
+    rand0 <- random 2;
+
+    mushroomPos <- if (rand0 == 0) {
+        rand2 <- random $ rowLength - 1;
+        let mushroomOffset = 1 + rand2 in
+        let position = modulus (fixedFlowerPlacementPos + mushroomOffset) rowLength in
+        return position;
+    } {
+        // The row iterator goes from 0 to N-1, so returning an index of N
+        // will ensure that the mushroom will not be placed.
+        return rowLength;
+    };
+
+    let requiredFlowerIdx = modulus yPos flowerVarietyCount in
+    let requiredFlower = getFlowerbyIndex requiredFlowerIdx in
+
+    requiredMushroomIdx <- random 4;
+    let requiredMushroom = getMushroomByIndex requiredMushroomIdx in
+
+    plantAllInRow flowerVarietyCount fixedFlowerPlacementPos mushroomPos requiredFlower requiredMushroom rowLength;
+    end;
+
+def go =
+    prepareEverything 40;
+    place "bit (0)";
+    end;
+
+go;

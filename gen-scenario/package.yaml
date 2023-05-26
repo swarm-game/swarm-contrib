@@ -1,0 +1,44 @@
+name: gen-scenario
+version: '0.1'
+synopsis: Swarm scenario generator
+description: Utilities for generating scenarios for Swarm
+author: Karl Ostmo <kostmo@gmail.com>
+maintainer: Karl Ostmo <kostmo@gmail.com>
+category: Game
+github: swarm-game/swarm
+license:            BSD-3-Clause
+default-extensions: ImportQualifiedPost
+ghc-options:
+- -fwarn-tabs
+- -W
+- -Werror
+dependencies:
+- base >= 4.5 && < 5
+- binary
+- bytestring
+- text
+- random
+library:
+  source-dirs: src
+  dependencies:
+  - swarm
+  - containers
+  - sorted-list
+  - aeson
+  - palette
+  - colour
+  - MonadRandom
+  - ginger
+  - yaml
+  - lens
+  - transformers
+  - mtl
+executables:
+  gen-flowers:
+    main: Main.hs
+    source-dirs:
+    - app
+    dependencies:
+    - gen-scenario
+    - optparse-applicative
+    - transformers

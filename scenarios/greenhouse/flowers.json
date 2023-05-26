@@ -1,0 +1,174 @@
+[
+    {
+        "name": "aster",
+        "description": "Aster amellus"
+    },
+    {
+        "name": "azalea",
+        "description": "Rhododendron indicum"
+    },
+    {
+        "name": "begonia",
+        "description": "Begonia obliqua"
+    },
+    {
+        "name": "buttercup",
+        "description": "Ranunculus repens"
+    },
+    {
+        "name": "chrysanthemum",
+        "description": "Chrysanthemum indicum"
+    },
+    {
+        "name": "clematis",
+        "description": "Clematis ligusticifolia"
+    },
+    {
+        "name": "coneflower",
+        "description": "Rudbeckia hirta"
+    },
+    {
+        "name": "crocus",
+        "description": "Crocus sativus"
+    },
+    {
+        "name": "daisy",
+        "description": "Bellis perennis",
+        "color": "#FFFFFF"  
+    },
+    {
+        "name": "daffodil",
+        "description": "Narcissus poeticus",
+        "color": "#FAFA33"
+    },
+    {
+        "name": "dahlia",
+        "description": "Dahlia pinnata",
+        "color": "#440022"
+    },
+    {
+        "name": "forget-me-not",
+        "description": "Myosotis sylvatica"
+    },
+    {
+        "name": "forsythia",
+        "description": "Forsythia suspensa"
+    },
+    {
+        "name": "freesia",
+        "description": "Freesia refracta"
+    },
+    {
+        "name": "gardenia",
+        "description": "Gardenia jasminoides"
+    },
+    {
+        "name": "geranium",
+        "description": "Geranium himalayense"
+    },
+    {
+        "name": "gladiolus",
+        "description": "Gladiolus communis"
+    },
+    {
+        "name": "hellebore",
+        "description": "Helleborus orientalis"
+    },
+    {
+        "name": "hibiscus",
+        "description": "Hibiscus syriacus"
+    },
+    {
+        "name": "hydrangea",
+        "description": "Hydrangea macrophylla"
+    },
+    {
+        "name": "iris",
+        "description": "Iris germanica"
+    },
+    {
+        "name": "jasmine",
+        "description": "Jasminum officinale"
+    },
+    {
+        "name": "lavender",
+        "description": "Lavandula spica",
+        "color": "#E6E6FA"
+    },
+    {
+        "name": "lilac",
+        "description": "Syringa vulgaris",
+        "color": "#C8A2C8"
+    },
+    {
+        "name": "lily",
+        "description": "Lilium candidum"
+    },
+    {
+        "name": "lupine",
+        "description": "Lupinus albus"
+    },
+    {
+        "name": "marigold",
+        "description": "Calendula officinalis",
+        "color": "#eaa221"
+    },
+    {
+        "name": "morning glory",
+        "description": "",
+        "color": "#87CEEB"
+    },{
+        "name": "orchid",
+        "description": "Phalaenopsis amabilis"
+    },
+    {
+        "name": "pansy",
+        "description": "Viola × wittrockiana",
+        "color": "#220044"
+    },
+    {
+        "name": "peony",
+        "description": "Paeonia officinalis"
+    },
+    {
+        "name": "primrose",
+        "description": "Primula vulgaris"
+    },
+    {
+        "name": "rhododendron",
+        "description": "Rhododendron ferrugineum",
+        "color": "#ff0000"
+    },
+    {
+        "name": "poppy",
+        "description": "Papaver somniferum",
+        "color": "#ff5238"
+    },
+    {
+        "name": "rose",
+        "description": "Rosa chinensis",
+        "color": "#ff0000"
+    },
+    {
+        "name": "snapdragon",
+        "description": "Antirrhinum majus"
+    },
+    {
+        "name": "sunflower",
+        "description": "Helianthus annuus",
+        "color": "#E8DE2A"
+    },
+    {
+        "name": "thistle",
+        "description": "Cirsium vulgare",
+        "color": "#D8BFD8"
+    },
+    {
+        "name": "tulip",
+        "description": "Tulipa gesneriana"
+    },
+    {
+        "name": "zinnia",
+        "description": "Chrysogonum peruvianum"
+    }
+]
